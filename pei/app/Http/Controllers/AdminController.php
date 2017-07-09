@@ -21,11 +21,14 @@ class AdminController extends Controller
    	 */
    	public function postLogin(Request $request)
    	{	
+      $res = DB::table('pei_admin') -> get();
+      var_dump($res);die;
    		//传过来的值
    		$user = $request -> except('_token');
+      var_dump($user);die;
    		//数据库查询的值
    		$pei_admin = DB::table('pei_admin') -> get();
-   		if($user['userName'] == $pei_admin[0]['userName'] && $user['password'] == $pei_admin[0]['password']) {
+   		if($user['userName'] == $pei_admin['userName'] && $user['password'] == $pei_admin['password']) {
           return redirect('/admin/adminindex');
       } else {
         return back()->with('info','登录失败,请检查用户名或者密码');
@@ -36,6 +39,6 @@ class AdminController extends Controller
      */
     public function getAdminindex()
     {
-      return view('admin.admin');
+      echo 222;
     }
 }

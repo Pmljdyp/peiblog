@@ -1,0 +1,3 @@
+document.writeln("<div class=\"s_ad125\"><a href=\"http://www.ssf.cc/rent.asp\" target=\"_blank\" rel=\"nofollow\"><img src=\"http://www.laozuo.org/banner/ssf.gif\" border=\"0\" title=\"ssf\" ></a></div>");
+document.writeln("<div class=\"s_ad125\"><a href=\"https://www.ufovps.com/link.php?id=5\" target=\"_blank\" rel=\"nofollow\"><img src=\"http://img.laozuo.org/banner/ufovps.gif\" border=\"0\" title=\"UFOVPS\" ></a></div>");
+document.writeln("<div class=\"s_ad125\"><a href=\"https://v.center/\" target=\"_blank\" rel=\"nofollow\"><img src=\"http://www.laozuo.org/banner/vcenter.jpg\" border=\"0\" title=\"18VPS\" ></a></div>");

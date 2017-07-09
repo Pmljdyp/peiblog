@@ -17,4 +17,4 @@ Route::get('/', function () {
 
 
 //后台登录
-Route::controller('/admin', 'AdminController');
+Route::controller('/admin','AdminController');

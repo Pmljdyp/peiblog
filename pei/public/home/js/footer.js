@@ -1,0 +1,1 @@
+document.writeln("<div class=\"footerads\"><a href=\"http://www.laozuo.org/vultr\" target=\"_blank\" rel=\"nofollow\"><img src=\"http://img.laozuo.org/banner/footerbanner.jpg\" border=\"0\" title=\"\"></a></div>");
