@@ -1,7 +1,7 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
+|----------- ---------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
 |
@@ -11,10 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+
+/**
+ * 网站后台
+ */
+
+Route::get('/admin/login','AdminController@login');
+Route::post('/admin/login','AdminController@dologin');
+Route::group(['middleware'=>'login'],function() {
+Route::controller('/admin','AdminController');	
 });
 
-
-//后台登录
-Route::controller('/admin','AdminController');
+/**
+ * 网站首页
+ */
+Route::controller('/','IndexController');//把/放到最后,不然除了/全部是404,因为/都可以匹配,其他的也就不能匹配到了

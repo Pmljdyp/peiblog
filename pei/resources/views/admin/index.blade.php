@@ -1,89 +1,234 @@
-<!DOCTYPE html>
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta charset="UTF-8">
-<title>Login Form</title>
-
-<link rel="stylesheet" href="./home/css/normalize.css">
-
-<style type="text/css">
-.btn { display: inline-block; *display: inline; *zoom: 1; padding: 4px 10px 4px; margin-bottom: 0; font-size: 13px; line-height: 18px; color: #333333; text-align: center;text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); vertical-align: middle; background-color: #f5f5f5; background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6); background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6)); background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6); background-image: -o-linear-gradient(top, #ffffff, #e6e6e6); background-image: linear-gradient(top, #ffffff, #e6e6e6); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#ffffff, endColorstr=#e6e6e6, GradientType=0); border-color: #e6e6e6 #e6e6e6 #e6e6e6; border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25); border: 1px solid #e6e6e6; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); cursor: pointer; *margin-left: .3em; }
-.btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] { background-color: #e6e6e6; }
-.btn-large { padding: 9px 14px; font-size: 15px; line-height: normal; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
-.btn:hover { color: #333333; text-decoration: none; background-color: #e6e6e6; background-position: 0 -15px; -webkit-transition: background-position 0.1s linear; -moz-transition: background-position 0.1s linear; -ms-transition: background-position 0.1s linear; -o-transition: background-position 0.1s linear; transition: background-position 0.1s linear; }
-.btn-primary, .btn-primary:hover { text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); color: #ffffff; }
-.btn-primary.active { color: rgba(255, 255, 255, 0.75); }
-.btn-primary { background-color: #4a77d4; background-image: -moz-linear-gradient(top, #6eb6de, #4a77d4); background-image: -ms-linear-gradient(top, #6eb6de, #4a77d4); background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#6eb6de), to(#4a77d4)); background-image: -webkit-linear-gradient(top, #6eb6de, #4a77d4); background-image: -o-linear-gradient(top, #6eb6de, #4a77d4); background-image: linear-gradient(top, #6eb6de, #4a77d4); background-repeat: repeat-x; filter: progid:dximagetransform.microsoft.gradient(startColorstr=#6eb6de, endColorstr=#4a77d4, GradientType=0);  border: 1px solid #3762bc; text-shadow: 1px 1px 1px rgba(0,0,0,0.4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.5); }
-.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] { filter: none; background-color: #4a77d4; }
-.btn-block { width: 100%; display:block; }
-
-* { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing:border-box; }
-
-html { width: 100%; height:100%; overflow:hidden; }
-
-body { 
-	width: 100%;
-	height:100%;
-	font-family: 'Open Sans', sans-serif;
-	background: #092756;
-	background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-	background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-	background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
-	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
-}
-.login { 
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin: -150px 0 0 -150px;
-	width:300px;
-	height:300px;
-}
-.login h1 { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
-
-input { 
-	width: 100%; 
-	margin-bottom: 10px; 
-	background: rgba(0,0,0,0.3);
-	border: none;
-	outline: none;
-	padding: 10px;
-	font-size: 13px;
-	color: #fff;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	border: 1px solid rgba(0,0,0,0.3);
-	border-radius: 4px;
-	box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
-	-webkit-transition: box-shadow .5s ease;
-	-moz-transition: box-shadow .5s ease;
-	-o-transition: box-shadow .5s ease;
-	-ms-transition: box-shadow .5s ease;
-	transition: box-shadow .5s ease;
-}
-input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgba(255,255,255,0.2); }
-
-</style>
-
-
-
+﻿
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>往事随风博客管理系统</title>
+<link rel="stylesheet" type="text/css" href="/home/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/home/css/admin.css">
+<link rel="stylesheet" type="text/css" href="/home/css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="">
+<link rel="shortcut icon" href="images/icon/favicon.ico">
+<script type="text/javascript" src="/home/js/laydate.js"></script>
+<script src="/home/js/jquery-2.1.4.min.js"></script>
+<!-- 屏蔽js代码错误信息 -->
+<SCRIPT language=javascript> 
+window.onerror=function(){return true;} 
+</SCRIPT> 
 </head>
-
-<body>
-
-<div class="login">
-	<h1>Login</h1>
-	<form method="post" action="/admin/login">
-		<input name="userName" placeholder="用户名" required="required" type="text">
-		<input name="password" placeholder="密码" required="required" type="password">
-		<button class="btn btn-primary btn-block btn-large">登录</button>
-		{{csrf_field()}}
-	</form>
+<body class="user-select">
+<section class="container-fluid">
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="/">PMLJDYP</a> </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="">消息 <span class="badge">1</span></a></li>
+            <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
+              <ul class="dropdown-menu dropdown-menu-left">
+                <li><a title="查看或修改个人信息" data-toggle="modal" data-target="#seeUserInfo">个人信息</a></li>
+                <li><a title="查看您的登录记录" data-toggle="modal" data-target="#seeUserLoginlog">登录记录</a></li>
+              </ul>
+            </li>
+            <li><a href="/admin/tui" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+            <li><a data-toggle="modal" data-target="#WeChat">帮助</a></li>
+          </ul>
+          <form action="" method="post" class="navbar-form navbar-right" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" autocomplete="off" placeholder="键入关键字搜索" maxlength="15">
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="submit">搜索</button>
+              </span> </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="row">
+    <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="/admin">首页</a></li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/jcwenzhang">文章</a></li>
+        <li><a href="/admin/jcgonggao">公告</a></li>
+        <li><a href="/admin/jcpinglun">评论</a></li>
+<!--         <li><a data-toggle="tooltip" data-placement="bottom" title="网站暂无留言功能">留言</a></li> -->
+      </ul>
+      <ul class="nav nav-sidebar">
+        <li><a href="/admin/jclanmu">栏目</a></li>
+        <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
+          <ul class="dropdown-menu" aria-labelledby="otherMenu">
+            <li><a href="/admin/jcyouqinglianjie">友情链接</a></li>
+            <li><a data-toggle="modal" data-target="#areDeveloping">访问记录</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav nav-sidebar">
+        <!-- <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
+          <ul class="dropdown-menu" aria-labelledby="userMenu">
+            <li><a data-toggle="modal" data-target="#areDeveloping">管理用户组</a></li>
+            <li><a href="manage-user.html">管理用户</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="loginlog.html">管理登录日志</a></li>
+          </ul>
+        </li> -->
+        <li>
+          <a href="/admin/jcwangzhanpeizhi" class="dropdown-toggle" id="settingMenu">网站设置</a>
+        </li>
+      </ul>
+    </aside>
+    @yield('content')
+  </div>
+</section>
+<!--个人信息模态框-->
+<div class="modal fade" id="seeUserInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <form action="" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" >个人信息</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table" style="margin-bottom:0px;">
+            <thead>
+              <tr> </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td wdith="20%">姓名:</td>
+                <td width="80%"><input type="text" value="王雨" class="form-control" name="truename" maxlength="10" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">用户名:</td>
+                <td width="80%"><input type="text" value="admin" class="form-control" name="username" maxlength="10" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">电话:</td>
+                <td width="80%"><input type="text" value="18538078281" class="form-control" name="usertel" maxlength="13" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">旧密码:</td>
+                <td width="80%"><input type="password" class="form-control" name="old_password" maxlength="18" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">新密码:</td>
+                <td width="80%"><input type="password" class="form-control" name="password" maxlength="18" autocomplete="off" /></td>
+              </tr>
+              <tr>
+                <td wdith="20%">确认密码:</td>
+                <td width="80%"><input type="password" class="form-control" name="new_password" maxlength="18" autocomplete="off" /></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr></tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!--个人登录记录模态框-->
+<div class="modal fade" id="seeUserLoginlog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" >登录记录</h4>
+      </div>
+      <div class="modal-body">
+          <table class="table" style="margin-bottom:0px;">
+            <thead>
+              <tr>
+                <th>登录IP</th>
+                <th>登录时间</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>::1:55570</td>
+                <td>2016-01-08 15:50:28</td>
+                <td>成功</td>
+              </tr>
+              <tr>
+                <td>::1:64377</td>
+                <td>2016-01-08 10:27:44</td>
+                <td>成功</td>
+              </tr>
+              <tr>
+                <td>::1:64027</td>
+                <td>2016-01-08 10:19:25</td>
+                <td>成功</td>
+              </tr>
+              <tr>
+                <td>::1:57081</td>
+                <td>2016-01-06 10:35:12</td>
+                <td>成功</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">朕已阅</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--微信二维码模态框-->
+<div class="modal fade user-select" id="WeChat" tabindex="-1" role="dialog" aria-labelledby="WeChatModalLabel">
+  <div class="modal-dialog" role="document" style="margin-top:120px;max-width:280px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
+      </div>
+      <div class="modal-body" style="text-align:center"> <img src="/home/images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
+    </div>
+  </div>
+</div>
+<!--提示模态框-->
+<div class="modal fade user-select" id="areDeveloping" tabindex="-1" role="dialog" aria-labelledby="areDevelopingModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
+      </div>
+      <div class="modal-body"> <img src="/home/images/baoman/baoman_01.gif" alt="深思熟虑" />
+        <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">朕已阅</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script src="/home/js/bootstrap.min.js"></script> 
+<script src="/home/js/admin-scripts.js"></script>
+<script src="/home/js/bootstrap.min.js"></script> 
 
-
-
-
-</body></html>
+<!--summernote富文本编辑器-->
+<link rel="stylesheet" type="text/css" href="/home/lib/summernote/summernote.css">
+<script src="/home/lib/summernote/summernote.js"></script> 
+<script src="/home/lib/summernote/lang/summernote-zh-CN.js"></script> 
+<script>
+$('#article-content').summernote({
+  lang: 'zh-CN'
+});
+</script>
+</body>
+</html>

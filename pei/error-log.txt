@@ -1,0 +1,1 @@
+[Thu Jul 20 13:52:40.435420 2017] [:error] [pid 6752:tid 1464] [client 127.0.0.1:50040] PHP Fatal error:  Cannot use [] for reading in D:\\xampp-laravel\\htdocs\\peiblog\\pei\\app\\Http\\Controllers\\AdminController.php on line 148, referer: http://pei.com/admin/jcwenzhang
