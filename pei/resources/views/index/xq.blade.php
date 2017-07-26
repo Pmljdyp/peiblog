@@ -85,7 +85,7 @@ window.onerror=function(){return true;}
                             <a href="/?id={{$lm['id']}}" rel="category tag">
                                {{$lm['column']}}
                             </a>
-                            &nbsp; 热度：15,283 ℃ &nbsp;
+                            &nbsp; 热度：{{$ar['read']}} ℃ &nbsp;
                             <a href="http://www.laozuo.org/10424.html#comments">
                                 1条评论
                             </a>
@@ -107,15 +107,15 @@ window.onerror=function(){return true;}
                                             {{$ar['uptime']}}
                                         </li>
                                         <li class="read">
-                                            博友热度 {{$ar['read']}} ℃
-                                            <a href="http://www.laozuo.org/10424.html#comments">
+                                            热度 {{$ar['read']}} ℃
+                                            <!-- <a href="http://www.laozuo.org/10424.html#comments">
                                                 1条评论
-                                            </a>
+                                            </a> -->
                                         </li>
                                         <li class="tag">
                                             标签：
                                             <a href="http://www.laozuo.org/tag/hostkvm" rel="tag">
-                                               {{$ar['label']}}
+                                                {{$ar['label']}}
                                             </a>
                                         </li>
                                         <li class="ratings">
@@ -177,12 +177,15 @@ window.onerror=function(){return true;}
                     <h3>
                         广告专区
                     </h3>
+                    <!-- 广告1 -->
+                    @foreach($one as $k => $v)
                     <div class="s_ad125">
-                        <a href="javascript:alert('是空的,别点了!!!')"
+                        <a href="{{$v['url']}}"
                         target="_blank" rel="nofollow">
-                            <img src="/home/img/ad2.jpg" style="width:260px;" border="0">
+                            <img src="{{$v['img']}}" style="width:260px;height:200px;" border="0">
                         </a>
                     </div>
+                    @endforeach
                 </div>
                 <div class="widget">
                     <div id="tab-title">
@@ -191,17 +194,12 @@ window.onerror=function(){return true;}
                                 最新日志
                             </span>
                         </h3>
-                        <div id="tab-content">
-                         @foreach($desc as $k => $v)
-                            <ul style="display: block;">
-                                <li>
-                                    <a href="/xq/{{$v['id']}}" rel="bookmark" title="{{$v['title']}}">
-                                    {{$v['title']}}
-                                    </a>
-                                </li>
-                            </ul>
+                        @foreach($desc as $k => $v)
+                            <a href="/xq/{{$v['id']}}" class="read" value="{{$v['id']}}"  rel="bookmark" title="{{$v['title']}}">
+                            {{$v['title']}}
+                            <hr style="border:1px dotted #DEDEDE;">
+                            </a>
                          @endforeach
-                        </div>
                     </div>
                 </div>
                 <div class="clear">
@@ -211,12 +209,15 @@ window.onerror=function(){return true;}
         </div>
         <div class="clear">
         </div>
+         <!-- 广告2 -->
+        @foreach($tow as $k => $v)
         <div class="footerads">
-            <a href="javascript:alert('别点了,啥也没')"
+            <a href="{{$v['url']}}"
             target="_blank" rel="nofollow">
-                <img src="/home/img/ad1.jpg" style="width:990px;" border="0" title="">
+                <img src="{{$v['img']}}" style="width:988px;height:100px;" border="0" title="">
             </a>
         </div>
+        @endforeach
         <div class="clear">
         </div>
         <div id="footer">
@@ -232,5 +233,18 @@ window.onerror=function(){return true;}
     </div>
     <div id="_BD_chrome" channel="" version="" date="">
     </div>
+            <!-- 阅读量 -->
+        <script>
+            $('.read').click(function() {
+            var id = $(this).attr('value');
+            $.ajax({
+                type:"get",
+                url:"/read/"+id,
+                // success:function(data){
+                //     console.log(data);
+                // }
+            });
+        });
+    </script>
 </body>
 </html>

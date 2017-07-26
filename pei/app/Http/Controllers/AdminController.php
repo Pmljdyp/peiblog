@@ -29,7 +29,17 @@ class AdminController extends Controller
             return back()->with('info','用户名无效或者密码无效');
         }
         if($password == $db['password'] && $username == $db['username']) {
-           \Cookie::queue('name','PMLJDYP',100000);//10 时间单位为分钟
+           \Cookie::queue('name','PMLJDYP',100000);//写入cookie 10 时间单位为分钟
+           // $inadmin = DB::table('pei_admin') -> insert([
+           //      'time' => date("Y-m-d H:i:s"),
+           //  ]);
+           $admin = DB::table('pei_admin') -> first();
+           if(!empty($admin)) {
+            $cha = DB::table('pei_admin') -> where('id',$admin['id']) -> update([
+                'time' => date("Y-m-d H:i:s"),//插入时间
+                'ci' => $admin['ci'] +=1,//插入登陆次数
+                ]);
+           }
            return redirect('/admin/index');
         } else {
             return back()->with('info','表演失败,还有3次机会');
@@ -42,6 +52,11 @@ class AdminController extends Controller
     {
          //删除 cookie
         \Cookie::queue('name','PMLJDYP',-1);
+        //获取上次登录的时间
+        $old = DB::table('pei_admin') -> first();
+        $upshang = DB::table('pei_admin') -> where('id',$old['id']) -> update([
+            'oldtime' => $old['time'],
+            ]);
         return redirect('/admin/login');
     }
     /**
@@ -51,28 +66,38 @@ class AdminController extends Controller
     {  
         $ser = $_SERVER;
         $ip = $request->ip();
-    	return view('admin.jicheng.jcshouye',compact('ser'),compact('ip'));
+        $art = count($Article = DB::table('Article') -> get());//文章总数
+        $col = count($column = DB::table('column') -> get());//栏目总数
+        $not = count($notice = DB::table('notice') -> get());//公共总数
+        $pei = DB::table('pei_admin') -> first();//获取管理员信息
+        $PMLJDYP = count($pei['id']);
+    	return view('admin.jicheng.jcshouye',['ser'=>$ser,'ip'=>$ip,'art'=>$art,'col'=>$col,'not'=>$not,'pei'=>$pei,'PMLJDYP'=>$PMLJDYP]);
     }
     /**
      * 继承文章列表
      */
     public function getJcwenzhang(Request $request)
     {
+        
+        // $list = DB::table('Article')
+        // ->leftJoin('Column','Article.cid','=','Column.id')
+        // ->select('Article.*','Column.id as cid','Column.column','Column.alias')//别名
+        // ->get();
         $list = DB::table('Article')
         ->leftJoin('Column','Article.cid','=','Column.id')
-        ->select('Article.*','Column.id as cid','Column.column','Column.alias')//别名
+        ->leftJoin('label','Article.lid','=','label.id')
+        ->select('Article.*','Column.id as cid','Column.column','Column.alias','label.label')//别名
         ->paginate($request->input('num',10));
-        $count = count($list);
-    	return view('admin.jicheng.jcwenzhang',compact('list'),compact('count'));
+    	return view('admin.jicheng.jcwenzhang',['list'=>$list]);
     }
     /**
      * 继承添加文章
      */
     public function getJcaddwenzhang()
     {   
-        
         $col = DB::table('Column') -> get();
-        return view('admin.jicheng.jcaddwenzhang',compact('col'));
+        $lab = DB::table('label') -> get();
+        return view('admin.jicheng.jcaddwenzhang',['col'=>$col,'lab'=>$lab]);
     }
     /**
      * 添加文章
@@ -82,10 +107,10 @@ class AdminController extends Controller
         $Article['title']  = $request -> title;     //标题
         $Article['keywords'] = $request -> keywords;//关键字
         $Article['cid'] = $request -> name;         //对应栏目的cid
-        $Article['label'] = $request -> label;      //标签
         $Article['content'] = $request -> editorValue;  //内容
         $Article['uptime'] = $request -> uptime;    //添加时间
         $Article['read'] = $request -> read;        //阅读量
+        $Article['lid'] = $request -> label;        //标签
             //图片插入
             $request -> hasFile('img');
             //创建文件的名字
@@ -95,7 +120,7 @@ class AdminController extends Controller
             //文件夹
             $dirname = './home/blog/uploads/';
             //文件吗
-            $file = $filename.'.'.$suffix;
+            $file = $filename.'.'.$suffix.'.png';
             //移动
             $request -> file('img') -> move($dirname,$file);
             //修改图片属性
@@ -111,22 +136,24 @@ class AdminController extends Controller
      * 修改文章
      */
     public function getJcupwenzhang($id)
-    {
-        $col = DB::table('Column') -> get();//查栏目
-        $Ar = DB::table('Article') -> where('id',$id)->first();
-        return view('admin.jicheng.jcupwenzhang',compact('col'),compact('Ar'));
+    {   
+        
+        $col = DB::table('Column') -> get();
+        $lab = DB::table('label') -> get();
+        $ll = DB::table('Article') -> where('id',$id) -> first();
+        return view('admin.jicheng.jcupwenzhang',['col'=>$col,'lab'=>$lab,'ll'=>$ll]);
     }
     /**
-     * 执行修改
+     * 执行修改文章
      */
     public function postUpwenzhang(Request $request,$id)
     {
-        $id     = $id;
+        $id = $id;
         $Ar['title'] = $request -> title;
         $Ar['content'] = $request -> content;
         $Ar['keywords'] = $request -> keywords;
         $Ar['cid'] = $request -> name;
-        $Ar['label'] = $request -> label;
+        $Ar['lid'] = $request -> label;
         $Ar['uptime'] = $request -> uptime;
         $In = DB::table('Article') -> where('id',$id) -> update($Ar);
         if($In) {
@@ -193,7 +220,7 @@ class AdminController extends Controller
                 if($de) {
                     echo 1;
                 } else {
-                    echo 2;
+                   echo 2;
                 }
         }
     }
@@ -220,13 +247,6 @@ class AdminController extends Controller
         } else {
             return back();
         }
-    }
-    /**
-     * 继承评论
-     */
-    public function getJcpinglun()
-    {
-    	return view('admin.jicheng.jcpinglun');
     }
     /**
      * 继承栏目
@@ -285,7 +305,61 @@ class AdminController extends Controller
         if($deco) {
             echo '1';
         } else {
-            echo '2';
+            return back();
+        }
+    }
+    /**
+     * 继承标签
+     */
+    public function getJcbiaoqian()
+    {
+        return view('admin.jicheng.jcbiaoqian');
+    }
+    /**
+     * 执行添加标签
+     */
+    public function postAddbiaoqian(Request $request)
+    {
+       $la['label'] = $request -> label;
+       $lab = DB::table('label') -> insert($la);
+       if($lab){
+            return redirect('/admin/jcbiaoqian');
+       } else {
+            return back()->with('info','添加失败，请重试');
+       }
+    }
+    /**
+     * 修改标签
+     */
+    public function getUpbiaoqian(Request $request,$id)
+    {
+        $upla = DB::table('label') -> where('id',$id) -> first();
+        return view('admin.jicheng.jcupbiaoqian',['upla'=>$upla]);
+    }
+    /**
+     * 执行修改标签
+     */
+    public function postUpbiaoqian(Request $request,$id)
+    {
+       $upla = DB::table('label') -> where('id',$id) -> update([
+            'label' => $request -> label,
+        ]);
+       if($upla){
+            return redirect('/admin/jcbiaoqian');
+       } else {
+            return back()->with('info','添加失败，请重试');
+       }
+    }
+    /**
+     * 删除标签
+     */
+    public function getDebiaoqian(Request $request,$id)
+    {
+        $dela = DB::table('label') -> where('id',$id) -> delete();
+        if($deco) {
+            echo '1';
+        } else {
+            return back();
         }
     }
     /**
@@ -337,5 +411,111 @@ class AdminController extends Controller
                 return back();
             }
         }
+    }
+    /**
+     * 广告列表
+     */
+    public function getJcguanggao()
+    {
+        $gg = DB::table('adver') -> get();
+        return view('admin.jicheng.jcguanggao',['gg'=>$gg]);
+    }
+    /**
+     * 添加广告
+     */
+    public function getAddguanggao()
+    {
+        return view('admin.jicheng.jcaddguanggao');
+    }
+    /**
+     * 执行添加
+     */
+    public function postInguanggao(Request $request)
+    {
+        $ad['urlname'] = $request -> urlname;
+        $ad['url'] = $request -> url;
+        $ad['gid'] = $request -> gid;
+
+            //图片上传
+        $request -> hasFile('img');
+            //创建文件 的名字
+        $filename = rand(10000,99999);
+            //获取文件的后缀
+        $suffix = $request ->file('img') -> getClientOriginalExtension(); 
+            //文件夹
+        $dirname = './home/blog/guanggao/';
+            //文件名
+        $file =  $filename.'.'.$suffix.'.png';
+        $request -> file('img') -> move($dirname,$file);
+        $ad['img'] = trim($dirname.$file,'.');
+        if(!empty($ad)) {
+            $add = DB::table('adver') -> insert($ad);
+                if($add) {
+                    return redirect('/admin/jcguanggao');
+                } else {
+                    return back();
+                }
+        } else {
+            return back();
+        }
+    }
+    /**
+     * 删除广告
+     */
+    public function getDeleguanggao($id)
+    {
+        $dele = DB::table('adver') -> where('id',$id) -> delete();
+        if($dele){
+            echo 1;
+        } else {
+            echo 2;
+        }
+    }
+    /**
+     * 修改广告
+     */
+    public function getJcupguanggao(Request $request,$id)
+    {
+        $cha = DB::table('adver') -> where('id',$id) -> first();
+        return view('admin.jicheng.jcupguanggao',['cha'=>$cha]);
+    }
+    /**
+     * 执行修改
+     */
+    public function postUpguanggao(Request $request,$id)
+    {
+        $adv['urlname'] = $request -> urlname;
+        $adv['url'] = $request -> url;
+        $adv['gid'] = $request -> gid;
+             //图片上传
+        $request -> hasFile('img');
+            //创建文件 的名字
+        $filename = rand(10000,99999);
+            //获取文件的后缀
+        $suffix = $request ->file('img') -> getClientOriginalExtension(); 
+            //文件夹
+        $dirname = './home/blog/guanggao/';
+            //文件名
+        $file =  $filename.'.'.$suffix.'.png';
+        $request -> file('img') -> move($dirname,$file);
+        $adv['img'] = trim($dirname.$file,'.');
+        if(!empty($adv)) {
+            $add = DB::table('adver') -> where('id',$id) -> update($adv);
+                if($add) {
+                    return redirect('/admin/jcguanggao');
+                } else {
+                    return back();
+                }
+        } else {
+            return back();
+        }
+
+    }
+    /**
+     * 继承评论  ***暂时不写***
+     */
+    public function getJcpinglun()
+    {
+        return view('admin.jicheng.jcpinglun');
     }
 }

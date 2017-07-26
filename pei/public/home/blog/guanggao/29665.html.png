@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://www.jq22.com/demo/css3-shine-radiobox20151224/ -->
+<html class=" -webkit-"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  
+
+  <title>CSS3自定义发光radiobox单选框DEMO演示</title>
+
+
+    <script src="./CSS3自定义发光radiobox单选框DEMO演示_files/prefixfree.min.js"></script>
+
+</head>
+
+<body>
+
+<div style="margin:30px auto;width:80px;">
+<input type="radio" name="name" checked="">
+<input type="radio" name="name">
+<input type="radio" name="name">
+</div>
+
+
+
+<div id="_BD_chrome" channel="" version="" date=""></div></body></html>

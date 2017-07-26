@@ -1,32 +1,31 @@
  @extends('admin.index')
 @section('content')
- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <div class="row">
-        <form action="/admin/upwenzhang/{{$Ar['id'] }}" method="post" class="add-article-form">
-          <div class="col-md-9">
+        <form action="/admin/upwenzhang/{{$ll['id']}}" method="post" class="add-article-form" enctype="multipart/form-data">
+          <div class="col-md-8">
             <h1 class="page-header">撰写新文章</h1>
             <div class="form-group">
               <label for="article-title" class="sr-only">标题</label>
-              <input type="text" id="article-title" value="{{ $Ar['title'] }}" name="title" class="form-control" placeholder="在此处输入标题" required autofocus autocomplete="off">
+              <input type="text" id="article-title" name="title" value="{{$ll['title']}}" class="form-control" placeholder="在此处输入标题" required autofocus autocomplete="off">
             </div>
-            <div class="form-group">
-              <label for="article-content" class="sr-only">内容</label>
-              <textarea id="article-content"  name="content" type="text/plain">{{ $Ar['content'] }}</textarea>
-            </div>
+            <script type="text/javascript" charset="utf-8" src="/home/edit/ueditor.config.js"></script>
+            <script type="text/javascript" charset="utf-8" src="/home/edit/ueditor.all.min.js"> </script>
+            <script type="text/javascript" charset="utf-8" src="/home/edit/lang/zh-cn/zh-cn.js"></script>
+            <script id="editor" type="text/plain" style="width:auto;height:auto;"><?php echo htmlspecialchars_decode($ll['content']);?></script>
+            <script type="text/javascript">
+                UE.getEditor('editor');
+                window.onresize = function(){//判断浏览器窗口发生变化而触发的事件
+                  location.reload(true);//刷新
+              }
+            </script>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>关键字</span></h2>
               <div class="add-article-box-content">
-              	<input type="text" class="form-control" value="{{ $Ar['keywords'] }}" placeholder="请输入关键字" name="keywords" required="" autocomplete="off">
+                <input type="text" class="form-control" placeholder="请输入关键字" value="{{$ll['keywords']}}" name="keywords" required="" autocomplete="off">
                 <span class="prompt-text">多个标签请用英文逗号,隔开。</span>
               </div>
             </div>
-          {{--   <div class="add-article-box">
-              <h2 class="add-article-box-title"><span>描述</span></h2>
-              <div class="add-article-box-content">
-              	<textarea class="form-control" name="describe" autocomplete="off"></textarea>
-                <span class="prompt-text">描述是可选的手工创建的内容总结，并可以在网页描述中使用</span>
-              </div>
-            </div> --}}
           </div>
           <div class="col-md-3">
             <h1 class="page-header">操作</h1>
@@ -37,46 +36,45 @@
                 <ul class="category-list">
                   <li>
                     <label>
-                      <input name="name" type="radio" value="{{ $v['id'] }}" @if($Ar['cid'] == $v['id']) checked @endif>
+                      <input name="name" type="radio" value="{{ $v['id'] }}" checked>
                       {{ $v['column'] }} <em class="hidden-md">( 栏目ID: <span>{{ $v['id'] }}</span> )</em></label>
                   </li>
                 </ul>
               </div>
             @endforeach
-
             </div>
             <div class="add-article-box">
-              <h2 class="add-article-box-title"><span>标签</span></h2>
+              <h2 class="add-article-box-title"><span>文章封面</span></h2>
               <div class="add-article-box-content">
-                <input type="text" value="{{ $Ar['label'] }}" class="form-control" required="" placeholder="输入新标签" name="label" autocomplete="off">
-                <span class="prompt-text">多个标签请用英文逗号,隔开</span> </div>
+                <input type="file" class="form-control" required="" placeholder="" name="img" autocomplete="off">
+                <span class="prompt-text">点击上传</span> </div>
             </div>
-            {{-- <div class="add-article-box">
-              <h2 class="add-article-box-title"><span>标题图片</span></h2>
-              <div class="add-article-box-content">
-                <input type="text" class="form-control" placeholder="点击按钮选择图片" id="pictureUpload" name="titlepic" autocomplete="off">
+              <div id="tagscloud"">
+                <h3 style="color:red">选择标签 <input id="lid" type="text" readOnly="true" name="label" value="{{$ll['lid']}}" style="width:30px;"></h3>
+                @foreach($lab as $k => $v)
+                        <a href="javascript:(void)" value="{{$v['id']}}" class="tagc1" style="left: 90.062px; top: 30.0269px; z-index: 102;">{{$v['label']}}
+                        </a>
+                @endforeach
+                <script>
+                  $('.tagc1').click(function() {
+                    var id = $(this).attr('value');
+                    document.getElementById("lid").value = id;
+                  });
+                </script>
               </div>
-              <div class="add-article-box-footer">
-                <button class="btn btn-default" type="button" ID="upImage">选择</button>
-              </div>
-            </div> --}}
              <div class="add-article-box">
               <div class="box">
                 <div class="demo2">
-                  <input placeholder="请输入日期" value="{{ $Ar['uptime'] }}" name="uptime" required="" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"><span class="prompt-text">选择发布日期</span>
+                  <input placeholder="请输入日期" name="uptime" required="" value="{{$ll['uptime']}}" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"><span class="prompt-text">选择发布日期</span>
                 </div>
               </div>
             </div>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>发布</span></h2>
-          {{--     <div class="add-article-box-content">
-              	<p><label>状态：</label><span class="article-status-display">未发布</span></p>
-                <p><label>公开度：</label><input type="radio" name="visibility" value="0" checked/>公开 <input type="radio" name="visibility" value="1" />加密</p>
-                <p><label>发布于：</label><span class="article-time-display"><input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" /></span></p>
-              </div> --}}
               <div class="add-article-box-footer">
                   {{csrf_field()}}
-                <button class="btn btn-primary" type="submit">修改</button>
+                  <input type="text" name="read" value="{{$ll['read']}}"> 阅读量
+                <button class="btn btn-primary" type="submit">发布</button>
               </div>
             </div>
           </div>

@@ -1,12 +1,11 @@
 @extends('admin.index')
 @section('content')
-asdasdasd
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
         <h1 class="page-header">操作</h1>
         <ol class="breadcrumb">
           <li><a href="/admin/jcaddwenzhang">增加文章</a></li>
         </ol>
-        <h1 class="page-header">管理 <span class="badge">{{ $count }}</span></h1>
+        <h1 class="page-header">管理 <span class="badge"></span></h1>
         <div class="table-responsive">
           <table class="table table-striped table-hover">
             <thead>
@@ -21,22 +20,22 @@ asdasdasd
               </tr>
             </thead>
             <tbody>
-            @foreach($list as $k => $v)           
-            <tr>
+            @foreach($list as $k=>$v)
+              <tr>
                 <td>
-                <input type="checkbox" class="input-control id check" name="checkbox[]" id="{{ $v['id'] }}"/>
+                  <input type="checkbox" class="input-control check" name="checkbox[]" id=""/>
                 </td>
                 <td class="article-title">{{$v['title']}}</td>
-                <td>{{ $v['column'] }}</td>
-                <td class="hidden-sm">{{$v['label']}}</td>
-                <td class="hidden-sm">0</td>
+                <td>{{$v['column']}}</td>
+                <td>{{$v['label']}}</td>
+                <td>暂无</td>
                 <td>{{$v['uptime']}}</td>
-                <td><a href="/admin/jcupwenzhang/{{ $v['id'] }}">修改</a> <a href="" class="boo" rel="{{ $v['id'] }}">删除</a></td>
+                <td><a href="/admin/jcupwenzhang/{{$v['id']}}">修改</a> <a href="" class="boo" rel="{{$v['id']}}">删除</a></td>
               </tr>
-            @endforeach
-            
+              @endforeach
+            </tbody>
             <script>
-                  {{-- ajax无刷新删除 --}}
+                  // ajax无刷新删除
                   //是否确认删除
                   $(function(){   
                     $(".boo").click(function(){
@@ -55,6 +54,7 @@ asdasdasd
                               if(data == '1') {
                                 de.parent().parent().remove();
                               }
+                              // console.log(data);
                             }
                           });
                           return false;//确认不刷新

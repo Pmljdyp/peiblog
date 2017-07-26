@@ -1,7 +1,5 @@
  @extends('admin.index')
 @section('content')
-
-
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <div class="row">
         <form action="/admin/addarticle" method="post" class="add-article-form" enctype="multipart/form-data">
@@ -52,21 +50,19 @@
                 <input type="file" class="form-control" required="" placeholder="" name="img" autocomplete="off">
                 <span class="prompt-text">点击上传</span> </div>
             </div>
-            <div class="add-article-box">
-              <h2 class="add-article-box-title"><span>标签</span></h2>
-              <div class="add-article-box-content">
-                <input type="text" class="form-control" required="" placeholder="输入新标签" name="label" autocomplete="off">
-                <span class="prompt-text">多个标签请用英文逗号,隔开</span> </div>
-            </div>
-            {{-- <div class="add-article-box">
-              <h2 class="add-article-box-title"><span>标题图片</span></h2>
-              <div class="add-article-box-content">
-                <input type="text" class="form-control" placeholder="点击按钮选择图片" id="pictureUpload" name="titlepic" autocomplete="off">
+              <div id="tagscloud"">
+                <h3 style="color:red">选择标签 <input id="lid" type="text" readOnly="true" name="label" value="" style="width:30px;"></h3>
+                @foreach($lab as $k => $v)
+                        <a href="javascript:(void)" value="{{$v['id']}}" class="tagc1" style="left: 90.062px; top: 30.0269px; z-index: 102;">{{$v['label']}}
+                        </a>
+                @endforeach
+                <script>
+                  $('.tagc1').click(function() {
+                    var id = $(this).attr('value');
+                    document.getElementById("lid").value = id;
+                  });
+                </script>
               </div>
-              <div class="add-article-box-footer">
-                <button class="btn btn-default" type="button" ID="upImage">选择</button>
-              </div>
-            </div> --}}
              <div class="add-article-box">
               <div class="box">
                 <div class="demo2">

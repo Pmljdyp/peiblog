@@ -65,7 +65,8 @@
               @endforeach
               </tbody>
             </table>
-            <span class="prompt-text"><strong>注：</strong>删除一个栏目也会删除栏目下的文章和子栏目,请谨慎删除!</span> </div>
+            <!-- <span class="prompt-text"><strong>注：</strong>删除一个栏目也会删除栏目下的文章和子栏目,请谨慎删除!</span>  -->
+            </div>
         </div>
       </div>
     </div>

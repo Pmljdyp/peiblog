@@ -36,7 +36,7 @@
           <span class="prompt-text">描述会出现在网页的description属性中。</span> 
         </div> --}}
         {{ csrf_field() }}
-        <button class="btn btn-primary" type="submit" name="submit">更新</button>
+        <button class="btn btn-primary" type="submit">更新</button>
       </form>
     </div>
 @stop

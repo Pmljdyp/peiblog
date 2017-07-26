@@ -1,6 +1,3 @@
-<?php
-
-?>
 @extends('admin.index')
 @section('content')
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
@@ -8,26 +5,26 @@
       <div class="row placeholders">
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>文章</h4>
-          <span class="text-muted">0 条</span> </div>
+          <span class="text-muted">{{$art}} 条</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>评论</h4>
-          <span class="text-muted">0 条</span> </div>
+          <h4>栏目</h4>
+          <span class="text-muted">{{$col}} 个</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>友链</h4>
-          <span class="text-muted">0 条</span> </div>
+          <h4>公告</h4>
+          <span class="text-muted">{{$not}} 条</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>访问量</h4>
-          <span class="text-muted">0</span> </div>
+          <span class="text-muted">{{$pei['fwl']}}</span> </div>
       </div>
       <h1 class="page-header">状态</h1>
       <div class="table-responsive">
         <table class="table table-striped table-hover">
           <tbody>
             <tr>
-              <td>登录者: <span>admin</span>，这是您第 <span>13</span> 次登录</td>
+              <td>登录者: <span>{{$pei['name']}}</span>，这是您第 <span>{{$pei['ci']}}</span> 次登录</td>
             </tr>
             <tr>
-              <td>上次登录时间: 2016-01-08 15:50:28 , 上次登录IP: ::1:55570</td>
+              <td>上次登录时间: {{$pei['oldtime']}}</td>
             </tr>
           </tbody>
         </table>
@@ -41,7 +38,7 @@
           <tbody>
             <tr>
               <td>管理员个数:</td>
-              <td>2 人</td>
+              <td>{{$PMLJDYP}}</td>
               <td>服务器软件:</td>
               <td>{{$ser['SERVER_SOFTWARE'] }}</td>
             </tr>
@@ -55,7 +52,7 @@
               <td>操作系统:</td>
               <td><?PHP echo PHP_OS; ?></td>
               <td>PHP运行方式:</td>
-              <td></td>
+              <td>电脑啊</td>
             </tr>
             <tr>
               <td>登录者IP:</td>
@@ -65,7 +62,7 @@
             </tr>
             <tr>
               <td>程序版本:</td>
-              <td class="version">YlsatCMS 1.0 <font size="-6" color="#BBB">(20160108160215)</font></td>
+              <td class="version">PMLJDYP v1.0 <font size="-6" color="#BBB"></font></td>
               <td>上传文件:</td>
               <td>可以 <font size="-6" color="#BBB">
               <?php
@@ -78,7 +75,7 @@
               <td>UTF-8</td>
               <td>当前时间:</td>
               <td><?php
-                  echo date("Y-m-d G:i:s");
+                  echo date("Y-m-d H:i:s");
               ?></td>
             </tr>
           </tbody>
@@ -98,13 +95,11 @@
             <tr>
             <script type="text/javascript">
                window.onload = function () {
-                  var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart; 
-                 console.log('Page load time is '+ loadTime);
-              }
+                  var loadTime = window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart;
+                  document.getElementById("time").innerHTML= loadTime;
+            }
             </script>
-              <td><span style="display:inline-block;width:8em">页面加载时间</span> PROCESSED IN 1.0835s  SECONDS 更多模板：<a href="http://w
-
-              ww.aspku.com/" target="_blank">源码之家</a></td>
+              <td>页面加载时间为:<strong id="time" style="color:red"></strong>毫秒</td>
             </tr>
           </tbody>
         </table>
